@@ -1,0 +1,10 @@
+export { GRID_SIZE, gridSizeAtom } from './grid';
+export { snakeAtom } from './snake';
+export type { Position } from './snake';
+export { directionAtom } from './direction';
+export type { Direction } from './direction';
+export { foodAtom } from './food';
+export { gameStatusAtom } from './gameStatus';
+export type { GameStatus } from './gameStatus';
+export { scoreAtom } from './score';
+export { newHeadAtom } from './newHead';
