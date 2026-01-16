@@ -3,6 +3,7 @@ import { useStore } from 'jotai';
 import {
   snakeAtom,
   eatenStatesAtom,
+  isChompingAtom,
   foodAtom,
   newHeadAtom,
   scoreAtom,
@@ -25,6 +26,9 @@ export const useHandleFood = () => {
     const ateFood = newHead.x === food.x && newHead.y === food.y;
 
     if (ateFood) {
+      // Set chomping state
+      store.set(isChompingAtom, true);
+
       // Set the current state to display in side panel
       store.set(currentStateAtom, food.state);
 
@@ -57,6 +61,9 @@ export const useHandleFood = () => {
       );
       store.set(foodAtom, newFood);
     } else {
+      // Reset chomping state
+      store.set(isChompingAtom, false);
+
       // Move snake (remove tail)
       store.set(snakeAtom, [{ x: newHead.x, y: newHead.y }, ...snake.slice(0, -1)]);
     }

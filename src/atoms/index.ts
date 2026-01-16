@@ -1,5 +1,5 @@
 export { GRID_SIZE, gridSizeAtom } from './grid';
-export { snakeAtom, eatenStatesAtom } from './snake';
+export { snakeAtom, eatenStatesAtom, isChompingAtom } from './snake';
 export type { Position } from './snake';
 export { directionAtom } from './direction';
 export type { Direction } from './direction';

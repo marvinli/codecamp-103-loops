@@ -1,12 +1,28 @@
 import { useAtomValue } from 'jotai';
-import { snakeAtom, eatenStatesAtom, gridSizeAtom, foodAtom } from '../../../atoms';
+import { snakeAtom, eatenStatesAtom, gridSizeAtom, foodAtom, directionAtom, isChompingAtom, gameStatusAtom } from '../../../atoms';
+import { head, headChomp, headKo } from '../../../assets/snake';
 import './Grid.css';
+
+// CSS transforms for each direction (base image faces RIGHT)
+const headTransforms = {
+  RIGHT: '',
+  LEFT: 'scaleX(-1)',
+  UP: 'rotate(-90deg)',
+  DOWN: 'rotate(90deg)',
+};
 
 function Grid() {
   const snake = useAtomValue(snakeAtom);
   const eatenStates = useAtomValue(eatenStatesAtom);
   const gridSize = useAtomValue(gridSizeAtom);
   const food = useAtomValue(foodAtom);
+  const direction = useAtomValue(directionAtom);
+  const isChomping = useAtomValue(isChompingAtom);
+  const gameStatus = useAtomValue(gameStatusAtom);
+
+  const isGameOver = gameStatus === 'GAME_OVER';
+  const headImage = isGameOver ? headKo : isChomping ? headChomp : head;
+  const headTransform = headTransforms[direction];
 
   const renderGrid = () => {
     const cells = [];
@@ -39,11 +55,22 @@ function Grid() {
             key={`${row}-${col}`}
             className={cellClass}
           >
+            {isSnakeHead && (
+              <img
+                src={headImage}
+                alt="snake head"
+                className="head-image"
+                style={{ transform: headTransform }}
+              />
+            )}
             {isFood && (
               <img src={food.state.flag} alt="state flag" className="food-flag" />
             )}
             {isSnakeBody && bodyState && (
               <img src={bodyState.flag} alt="state flag" className="body-flag" />
+            )}
+            {isSnakeBody && !bodyState && (
+              <div className="snake-tail" />
             )}
           </div>
         );
