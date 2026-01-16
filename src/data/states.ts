@@ -1,83 +1,438 @@
-import { flags, shapes } from '../assets';
+import { flags, shapes } from "../assets";
 
 export interface StateInfo {
-  name: string;
-  abbreviation: string;
-  capital: string;
-  population: number;
-  area: number; // square miles
-  flag: string;
-  shape: string;
-  funFact: string;
+	name: string;
+	abbreviation: string;
+	capital: string;
+	population: number;
+	area: number; // square miles
+	flag: string;
+	shape: string;
+	funFact: string;
 }
 
 // State data - assets are looked up by abbreviation
-const stateData: Omit<StateInfo, 'flag' | 'shape'>[] = [
-  { name: 'Alabama', abbreviation: 'AL', capital: 'Montgomery', population: 5024279, area: 52420, funFact: 'Home to the first 911 call in the US (1968)' },
-  { name: 'Alaska', abbreviation: 'AK', capital: 'Juneau', population: 733391, area: 665384, funFact: 'Has more coastline than all other US states combined' },
-  { name: 'Arizona', abbreviation: 'AZ', capital: 'Phoenix', population: 7151502, area: 113990, funFact: 'Home to the Grand Canyon, one of the Seven Natural Wonders' },
-  { name: 'Arkansas', abbreviation: 'AR', capital: 'Little Rock', population: 3011524, area: 53179, funFact: 'The only US state that produces diamonds' },
-  { name: 'California', abbreviation: 'CA', capital: 'Sacramento', population: 39538223, area: 163695, funFact: 'If it were a country, it would have the 5th largest economy in the world' },
-  { name: 'Colorado', abbreviation: 'CO', capital: 'Denver', population: 5773714, area: 104094, funFact: 'Has the highest average elevation of any US state' },
-  { name: 'Connecticut', abbreviation: 'CT', capital: 'Hartford', population: 3605944, area: 5543, funFact: 'Home to the first hamburger (1900) and phone book (1878)' },
-  { name: 'Delaware', abbreviation: 'DE', capital: 'Dover', population: 989948, area: 2489, funFact: 'The first state to ratify the US Constitution' },
-  { name: 'Florida', abbreviation: 'FL', capital: 'Tallahassee', population: 21538187, area: 65758, funFact: 'Has the longest coastline in the contiguous US' },
-  { name: 'Georgia', abbreviation: 'GA', capital: 'Atlanta', population: 10711908, area: 59425, funFact: 'Produces more peanuts than any other state' },
-  { name: 'Hawaii', abbreviation: 'HI', capital: 'Honolulu', population: 1455271, area: 10932, funFact: 'The only US state made up entirely of islands' },
-  { name: 'Idaho', abbreviation: 'ID', capital: 'Boise', population: 1839106, area: 83569, funFact: 'Produces about 1/3 of all potatoes grown in the US' },
-  { name: 'Illinois', abbreviation: 'IL', capital: 'Springfield', population: 12812508, area: 57914, funFact: 'Chicago is home to the first ever skyscraper (1885)' },
-  { name: 'Indiana', abbreviation: 'IN', capital: 'Indianapolis', population: 6785528, area: 36420, funFact: 'Home to the Indianapolis 500, the largest single-day sporting event' },
-  { name: 'Iowa', abbreviation: 'IA', capital: 'Des Moines', population: 3190369, area: 56273, funFact: 'Produces more corn and pork than any other state' },
-  { name: 'Kansas', abbreviation: 'KS', capital: 'Topeka', population: 2937880, area: 82278, funFact: 'Geographic center of the contiguous United States' },
-  { name: 'Kentucky', abbreviation: 'KY', capital: 'Frankfort', population: 4505836, area: 40408, funFact: 'Home to the longest cave system in the world (Mammoth Cave)' },
-  { name: 'Louisiana', abbreviation: 'LA', capital: 'Baton Rouge', population: 4657757, area: 52378, funFact: 'New Orleans is the birthplace of jazz music' },
-  { name: 'Maine', abbreviation: 'ME', capital: 'Augusta', population: 1362359, area: 35380, funFact: "Produces 90% of the country's lobster supply" },
-  { name: 'Maryland', abbreviation: 'MD', capital: 'Annapolis', population: 6177224, area: 12406, funFact: 'Home to the US Naval Academy and the Star-Spangled Banner' },
-  { name: 'Massachusetts', abbreviation: 'MA', capital: 'Boston', population: 7029917, area: 10554, funFact: 'Home to Harvard, the oldest university in the US (1636)' },
-  { name: 'Michigan', abbreviation: 'MI', capital: 'Lansing', population: 10077331, area: 96714, funFact: 'Has more lighthouses than any other state (over 120)' },
-  { name: 'Minnesota', abbreviation: 'MN', capital: 'Saint Paul', population: 5706494, area: 86936, funFact: 'Land of 10,000 Lakes (actually has 11,842!)' },
-  { name: 'Mississippi', abbreviation: 'MS', capital: 'Jackson', population: 2961279, area: 48432, funFact: "Birthplace of the blues and rock 'n' roll" },
-  { name: 'Missouri', abbreviation: 'MO', capital: 'Jefferson City', population: 6154913, area: 69707, funFact: 'The Gateway Arch is the tallest man-made monument in the US' },
-  { name: 'Montana', abbreviation: 'MT', capital: 'Helena', population: 1084225, area: 147040, funFact: 'Has the largest grizzly bear population in the lower 48 states' },
-  { name: 'Nebraska', abbreviation: 'NE', capital: 'Lincoln', population: 1961504, area: 77348, funFact: 'Has the largest underground aquifer (Ogallala) in the US' },
-  { name: 'Nevada', abbreviation: 'NV', capital: 'Carson City', population: 3104614, area: 110572, funFact: 'Las Vegas has more hotel rooms than any other city in the world' },
-  { name: 'New Hampshire', abbreviation: 'NH', capital: 'Concord', population: 1377529, area: 9349, funFact: 'First state to declare independence from England (1776)' },
-  { name: 'New Jersey', abbreviation: 'NJ', capital: 'Trenton', population: 9288994, area: 8723, funFact: 'Has the most diners in the world and is the diner capital' },
-  { name: 'New Mexico', abbreviation: 'NM', capital: 'Santa Fe', population: 2117522, area: 121590, funFact: 'Santa Fe is the highest and oldest capital city in the US' },
-  { name: 'New York', abbreviation: 'NY', capital: 'Albany', population: 20201249, area: 54555, funFact: 'The Statue of Liberty was a gift from France in 1886' },
-  { name: 'North Carolina', abbreviation: 'NC', capital: 'Raleigh', population: 10439388, area: 53819, funFact: 'Site of the first powered airplane flight (Wright Brothers, 1903)' },
-  { name: 'North Dakota', abbreviation: 'ND', capital: 'Bismarck', population: 779094, area: 70698, funFact: 'Produces more sunflowers than any other state' },
-  { name: 'Ohio', abbreviation: 'OH', capital: 'Columbus', population: 11799448, area: 44826, funFact: 'Birthplace of 7 US presidents, more than any other state' },
-  { name: 'Oklahoma', abbreviation: 'OK', capital: 'Oklahoma City', population: 3959353, area: 69899, funFact: 'Has the only state capitol with an oil well beneath it' },
-  { name: 'Oregon', abbreviation: 'OR', capital: 'Salem', population: 4237256, area: 98379, funFact: 'Has the most ghost towns of any state (over 250)' },
-  { name: 'Pennsylvania', abbreviation: 'PA', capital: 'Harrisburg', population: 13002700, area: 46054, funFact: 'Home to the first zoo (Philadelphia, 1874) and computer (ENIAC, 1946)' },
-  { name: 'Rhode Island', abbreviation: 'RI', capital: 'Providence', population: 1097379, area: 1545, funFact: 'Smallest state but has over 400 miles of coastline' },
-  { name: 'South Carolina', abbreviation: 'SC', capital: 'Columbia', population: 5118425, area: 32020, funFact: 'Home to the first public museum in America (1773)' },
-  { name: 'South Dakota', abbreviation: 'SD', capital: 'Pierre', population: 886667, area: 77116, funFact: 'Mount Rushmore took 14 years to carve (1927-1941)' },
-  { name: 'Tennessee', abbreviation: 'TN', capital: 'Nashville', population: 6910840, area: 42144, funFact: 'Nashville is known as Music City, home of country music' },
-  { name: 'Texas', abbreviation: 'TX', capital: 'Austin', population: 29145505, area: 268596, funFact: 'Only state to have been its own independent nation (1836-1845)' },
-  { name: 'Utah', abbreviation: 'UT', capital: 'Salt Lake City', population: 3271616, area: 84897, funFact: 'Has the greatest snow on Earth with an average of 500 inches yearly' },
-  { name: 'Vermont', abbreviation: 'VT', capital: 'Montpelier', population: 643077, area: 9616, funFact: 'Produces more maple syrup than any other state' },
-  { name: 'Virginia', abbreviation: 'VA', capital: 'Richmond', population: 8631393, area: 42775, funFact: 'Birthplace of 8 US presidents, including 4 of the first 5' },
-  { name: 'Washington', abbreviation: 'WA', capital: 'Olympia', population: 7614893, area: 71298, funFact: 'Produces more apples than any other state (over 10 billion/year)' },
-  { name: 'West Virginia', abbreviation: 'WV', capital: 'Charleston', population: 1793716, area: 24230, funFact: 'Almost entirely within the Appalachian Mountains' },
-  { name: 'Wisconsin', abbreviation: 'WI', capital: 'Madison', population: 5893718, area: 65496, funFact: 'Produces more cheese than any other state (3 billion+ lbs/year)' },
-  { name: 'Wyoming', abbreviation: 'WY', capital: 'Cheyenne', population: 576851, area: 97813, funFact: "Yellowstone was the world's first national park (1872)" },
+const stateData: Omit<StateInfo, "flag" | "shape">[] = [
+	{
+		name: "Alabama",
+		abbreviation: "AL",
+		capital: "Montgomery",
+		population: 5024279,
+		area: 52420,
+		funFact: "Home to the first 911 call in the US (1968)",
+	},
+	{
+		name: "Alaska",
+		abbreviation: "AK",
+		capital: "Juneau",
+		population: 733391,
+		area: 665384,
+		funFact: "Has more coastline than all other US states combined",
+	},
+	{
+		name: "Arizona",
+		abbreviation: "AZ",
+		capital: "Phoenix",
+		population: 7151502,
+		area: 113990,
+		funFact: "Home to the Grand Canyon, one of the Seven Natural Wonders",
+	},
+	{
+		name: "Arkansas",
+		abbreviation: "AR",
+		capital: "Little Rock",
+		population: 3011524,
+		area: 53179,
+		funFact: "The only US state that produces diamonds",
+	},
+	{
+		name: "California",
+		abbreviation: "CA",
+		capital: "Sacramento",
+		population: 39538223,
+		area: 163695,
+		funFact:
+			"If it were a country, it would have the 5th largest economy in the world",
+	},
+	{
+		name: "Colorado",
+		abbreviation: "CO",
+		capital: "Denver",
+		population: 5773714,
+		area: 104094,
+		funFact: "Has the highest average elevation of any US state",
+	},
+	{
+		name: "Connecticut",
+		abbreviation: "CT",
+		capital: "Hartford",
+		population: 3605944,
+		area: 5543,
+		funFact: "Home to the first hamburger (1900) and phone book (1878)",
+	},
+	{
+		name: "Delaware",
+		abbreviation: "DE",
+		capital: "Dover",
+		population: 989948,
+		area: 2489,
+		funFact: "The first state to ratify the US Constitution",
+	},
+	{
+		name: "Florida",
+		abbreviation: "FL",
+		capital: "Tallahassee",
+		population: 21538187,
+		area: 65758,
+		funFact: "Has the longest coastline in the contiguous US",
+	},
+	{
+		name: "Georgia",
+		abbreviation: "GA",
+		capital: "Atlanta",
+		population: 10711908,
+		area: 59425,
+		funFact: "Produces more peanuts than any other state",
+	},
+	{
+		name: "Hawaii",
+		abbreviation: "HI",
+		capital: "Honolulu",
+		population: 1455271,
+		area: 10932,
+		funFact: "The only US state made up entirely of islands",
+	},
+	{
+		name: "Idaho",
+		abbreviation: "ID",
+		capital: "Boise",
+		population: 1839106,
+		area: 83569,
+		funFact: "Produces about 1/3 of all potatoes grown in the US",
+	},
+	{
+		name: "Illinois",
+		abbreviation: "IL",
+		capital: "Springfield",
+		population: 12812508,
+		area: 57914,
+		funFact: "Chicago is home to the first ever skyscraper (1885)",
+	},
+	{
+		name: "Indiana",
+		abbreviation: "IN",
+		capital: "Indianapolis",
+		population: 6785528,
+		area: 36420,
+		funFact:
+			"Home to the Indianapolis 500, the largest single-day sporting event",
+	},
+	{
+		name: "Iowa",
+		abbreviation: "IA",
+		capital: "Des Moines",
+		population: 3190369,
+		area: 56273,
+		funFact: "Produces more corn and pork than any other state",
+	},
+	{
+		name: "Kansas",
+		abbreviation: "KS",
+		capital: "Topeka",
+		population: 2937880,
+		area: 82278,
+		funFact: "Geographic center of the contiguous United States",
+	},
+	{
+		name: "Kentucky",
+		abbreviation: "KY",
+		capital: "Frankfort",
+		population: 4505836,
+		area: 40408,
+		funFact: "Home to the longest cave system in the world (Mammoth Cave)",
+	},
+	{
+		name: "Louisiana",
+		abbreviation: "LA",
+		capital: "Baton Rouge",
+		population: 4657757,
+		area: 52378,
+		funFact: "New Orleans is the birthplace of jazz music",
+	},
+	{
+		name: "Maine",
+		abbreviation: "ME",
+		capital: "Augusta",
+		population: 1362359,
+		area: 35380,
+		funFact: "Produces 90% of the country's lobster supply",
+	},
+	{
+		name: "Maryland",
+		abbreviation: "MD",
+		capital: "Annapolis",
+		population: 6177224,
+		area: 12406,
+		funFact: "Home to the US Naval Academy and the Star-Spangled Banner",
+	},
+	{
+		name: "Massachusetts",
+		abbreviation: "MA",
+		capital: "Boston",
+		population: 7029917,
+		area: 10554,
+		funFact: "Home to Harvard, the oldest university in the US (1636)",
+	},
+	{
+		name: "Michigan",
+		abbreviation: "MI",
+		capital: "Lansing",
+		population: 10077331,
+		area: 96714,
+		funFact: "Has more lighthouses than any other state (over 120)",
+	},
+	{
+		name: "Minnesota",
+		abbreviation: "MN",
+		capital: "Saint Paul",
+		population: 5706494,
+		area: 86936,
+		funFact: "Land of 10,000 Lakes (actually has 11,842!)",
+	},
+	{
+		name: "Mississippi",
+		abbreviation: "MS",
+		capital: "Jackson",
+		population: 2961279,
+		area: 48432,
+		funFact: "Birthplace of the blues and rock 'n' roll",
+	},
+	{
+		name: "Missouri",
+		abbreviation: "MO",
+		capital: "Jefferson City",
+		population: 6154913,
+		area: 69707,
+		funFact: "The Gateway Arch is the tallest man-made monument in the US",
+	},
+	{
+		name: "Montana",
+		abbreviation: "MT",
+		capital: "Helena",
+		population: 1084225,
+		area: 147040,
+		funFact: "Has the largest grizzly bear population in the lower 48 states",
+	},
+	{
+		name: "Nebraska",
+		abbreviation: "NE",
+		capital: "Lincoln",
+		population: 1961504,
+		area: 77348,
+		funFact: "Has the largest underground aquifer (Ogallala) in the US",
+	},
+	{
+		name: "Nevada",
+		abbreviation: "NV",
+		capital: "Carson City",
+		population: 3104614,
+		area: 110572,
+		funFact: "Las Vegas has more hotel rooms than any other city in the world",
+	},
+	{
+		name: "New Hampshire",
+		abbreviation: "NH",
+		capital: "Concord",
+		population: 1377529,
+		area: 9349,
+		funFact: "First state to declare independence from England (1776)",
+	},
+	{
+		name: "New Jersey",
+		abbreviation: "NJ",
+		capital: "Trenton",
+		population: 9288994,
+		area: 8723,
+		funFact: "Has the most diners in the world and is the diner capital",
+	},
+	{
+		name: "New Mexico",
+		abbreviation: "NM",
+		capital: "Santa Fe",
+		population: 2117522,
+		area: 121590,
+		funFact: "Santa Fe is the highest and oldest capital city in the US",
+	},
+	{
+		name: "New York",
+		abbreviation: "NY",
+		capital: "Albany",
+		population: 20201249,
+		area: 54555,
+		funFact: "The Statue of Liberty was a gift from France in 1886",
+	},
+	{
+		name: "North Carolina",
+		abbreviation: "NC",
+		capital: "Raleigh",
+		population: 10439388,
+		area: 53819,
+		funFact:
+			"Site of the first powered airplane flight (Wright Brothers, 1903)",
+	},
+	{
+		name: "North Dakota",
+		abbreviation: "ND",
+		capital: "Bismarck",
+		population: 779094,
+		area: 70698,
+		funFact: "Produces more sunflowers than any other state",
+	},
+	{
+		name: "Ohio",
+		abbreviation: "OH",
+		capital: "Columbus",
+		population: 11799448,
+		area: 44826,
+		funFact: "Birthplace of 7 US presidents, more than any other state",
+	},
+	{
+		name: "Oklahoma",
+		abbreviation: "OK",
+		capital: "Oklahoma City",
+		population: 3959353,
+		area: 69899,
+		funFact: "Has the only state capitol with an oil well beneath it",
+	},
+	{
+		name: "Oregon",
+		abbreviation: "OR",
+		capital: "Salem",
+		population: 4237256,
+		area: 98379,
+		funFact: "Has the most ghost towns of any state (over 250)",
+	},
+	{
+		name: "Pennsylvania",
+		abbreviation: "PA",
+		capital: "Harrisburg",
+		population: 13002700,
+		area: 46054,
+		funFact:
+			"Home to the first zoo (Philadelphia, 1874) and computer (ENIAC, 1946)",
+	},
+	{
+		name: "Rhode Island",
+		abbreviation: "RI",
+		capital: "Providence",
+		population: 1097379,
+		area: 1545,
+		funFact: "Smallest state but has over 400 miles of coastline",
+	},
+	{
+		name: "South Carolina",
+		abbreviation: "SC",
+		capital: "Columbia",
+		population: 5118425,
+		area: 32020,
+		funFact: "Home to the first public museum in America (1773)",
+	},
+	{
+		name: "South Dakota",
+		abbreviation: "SD",
+		capital: "Pierre",
+		population: 886667,
+		area: 77116,
+		funFact: "Mount Rushmore took 14 years to carve (1927-1941)",
+	},
+	{
+		name: "Tennessee",
+		abbreviation: "TN",
+		capital: "Nashville",
+		population: 6910840,
+		area: 42144,
+		funFact: "Nashville is known as Music City, home of country music",
+	},
+	{
+		name: "Texas",
+		abbreviation: "TX",
+		capital: "Austin",
+		population: 29145505,
+		area: 268596,
+		funFact: "Only state to have been its own independent nation (1836-1845)",
+	},
+	{
+		name: "Utah",
+		abbreviation: "UT",
+		capital: "Salt Lake City",
+		population: 3271616,
+		area: 84897,
+		funFact:
+			"Has the greatest snow on Earth with an average of 500 inches yearly",
+	},
+	{
+		name: "Vermont",
+		abbreviation: "VT",
+		capital: "Montpelier",
+		population: 643077,
+		area: 9616,
+		funFact: "Produces more maple syrup than any other state",
+	},
+	{
+		name: "Virginia",
+		abbreviation: "VA",
+		capital: "Richmond",
+		population: 8631393,
+		area: 42775,
+		funFact: "Birthplace of 8 US presidents, including 4 of the first 5",
+	},
+	{
+		name: "Washington",
+		abbreviation: "WA",
+		capital: "Olympia",
+		population: 7614893,
+		area: 71298,
+		funFact: "Produces more apples than any other state (over 10 billion/year)",
+	},
+	{
+		name: "West Virginia",
+		abbreviation: "WV",
+		capital: "Charleston",
+		population: 1793716,
+		area: 24230,
+		funFact: "Almost entirely within the Appalachian Mountains",
+	},
+	{
+		name: "Wisconsin",
+		abbreviation: "WI",
+		capital: "Madison",
+		population: 5893718,
+		area: 65496,
+		funFact: "Produces more cheese than any other state (3 billion+ lbs/year)",
+	},
+	{
+		name: "Wyoming",
+		abbreviation: "WY",
+		capital: "Cheyenne",
+		population: 576851,
+		area: 97813,
+		funFact: "Yellowstone was the world's first national park (1872)",
+	},
 ];
 
 // Build full state info with assets looked up by code
 export const states: StateInfo[] = stateData.map((state) => ({
-  ...state,
-  flag: flags[state.abbreviation],
-  shape: shapes[state.abbreviation],
+	...state,
+	flag: flags[state.abbreviation],
+	shape: shapes[state.abbreviation],
 }));
 
 // Utility function to shuffle array
 export const shuffleArray = <T>(array: T[]): T[] => {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
+	const shuffled = [...array];
+	for (let i = shuffled.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+	}
+	return shuffled;
 };
