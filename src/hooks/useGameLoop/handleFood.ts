@@ -6,8 +6,12 @@ import {
   newHeadAtom,
   scoreAtom,
   GRID_SIZE,
+  stateQueueAtom,
+  currentStateAtom,
   type Position,
 } from '../../atoms';
+import { type Food } from '../../atoms/food';
+import { states, shuffleArray } from '../../data/states';
 
 export const useHandleFood = () => {
   const store = useStore();
@@ -20,17 +24,30 @@ export const useHandleFood = () => {
     const ateFood = newHead.x === food.x && newHead.y === food.y;
 
     if (ateFood) {
+      // Set the current state to display in side panel
+      store.set(currentStateAtom, food.state);
+
       // Grow snake and update score
       const newSnake = [newHead, ...snake];
       store.set(snakeAtom, newSnake);
       store.set(scoreAtom, store.get(scoreAtom) + 10);
 
-      // Generate new food position
-      let newFood: Position;
+      // Get next state from queue
+      let queue = store.get(stateQueueAtom);
+      if (queue.length === 0) {
+        // Reshuffle if queue is empty
+        queue = shuffleArray([...states]);
+      }
+      const [nextState, ...remainingQueue] = queue;
+      store.set(stateQueueAtom, remainingQueue);
+
+      // Generate new food position with next state
+      let newFood: Food;
       do {
         newFood = {
           x: Math.floor(Math.random() * GRID_SIZE),
           y: Math.floor(Math.random() * GRID_SIZE),
+          state: nextState,
         };
       } while (
         newSnake.some((segment) => segment.x === newFood.x && segment.y === newFood.y)

@@ -4,5 +4,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 24px;
   background-color: #1a1a1a;
+  padding: 20px;
+  box-sizing: border-box;
 }

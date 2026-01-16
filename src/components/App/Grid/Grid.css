@@ -1,7 +1,7 @@
 .grid {
   display: grid;
-  width: 90vmin;
-  height: 90vmin;
+  width: min(80vh, 80vw);
+  height: min(80vh, 80vw);
   gap: 1px;
   background-color: #333;
   border: 2px solid #555;
@@ -24,7 +24,14 @@
 }
 
 .food {
-  background-color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.food-flag {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
 }

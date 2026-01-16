@@ -32,7 +32,11 @@ function Grid() {
           <div
             key={`${row}-${col}`}
             className={cellClass}
-          />
+          >
+            {isFood && (
+              <img src={food.state.flag} alt="state flag" className="food-flag" />
+            )}
+          </div>
         );
       }
     }

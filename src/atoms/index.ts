@@ -8,3 +8,4 @@ export { gameStatusAtom } from './gameStatus';
 export type { GameStatus } from './gameStatus';
 export { scoreAtom } from './score';
 export { newHeadAtom } from './newHead';
+export { stateQueueAtom, currentStateAtom } from './stateQueue';
