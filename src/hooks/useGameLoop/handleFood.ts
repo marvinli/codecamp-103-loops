@@ -2,13 +2,13 @@ import { useCallback } from 'react';
 import { useStore } from 'jotai';
 import {
   snakeAtom,
+  eatenStatesAtom,
   foodAtom,
   newHeadAtom,
   scoreAtom,
   GRID_SIZE,
   stateQueueAtom,
   currentStateAtom,
-  type Position,
 } from '../../atoms';
 import { type Food } from '../../atoms/food';
 import { states, shuffleArray } from '../../data/states';
@@ -20,6 +20,7 @@ export const useHandleFood = () => {
     const snake = store.get(snakeAtom);
     const food = store.get(foodAtom);
     const newHead = store.get(newHeadAtom);
+    const eatenStates = store.get(eatenStatesAtom);
 
     const ateFood = newHead.x === food.x && newHead.y === food.y;
 
@@ -27,15 +28,17 @@ export const useHandleFood = () => {
       // Set the current state to display in side panel
       store.set(currentStateAtom, food.state);
 
-      // Grow snake and update score
-      const newSnake = [newHead, ...snake];
+      // Add eaten state to front of list
+      store.set(eatenStatesAtom, [food.state, ...eatenStates]);
+
+      // Grow snake (keep all segments, add new head)
+      const newSnake = [{ x: newHead.x, y: newHead.y }, ...snake];
       store.set(snakeAtom, newSnake);
       store.set(scoreAtom, store.get(scoreAtom) + 10);
 
       // Get next state from queue
       let queue = store.get(stateQueueAtom);
       if (queue.length === 0) {
-        // Reshuffle if queue is empty
         queue = shuffleArray([...states]);
       }
       const [nextState, ...remainingQueue] = queue;
@@ -55,7 +58,7 @@ export const useHandleFood = () => {
       store.set(foodAtom, newFood);
     } else {
       // Move snake (remove tail)
-      store.set(snakeAtom, [newHead, ...snake.slice(0, -1)]);
+      store.set(snakeAtom, [{ x: newHead.x, y: newHead.y }, ...snake.slice(0, -1)]);
     }
   }, [store]);
 };

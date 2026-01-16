@@ -1,9 +1,10 @@
 import { useAtomValue } from 'jotai';
-import { snakeAtom, gridSizeAtom, foodAtom } from '../../../atoms';
+import { snakeAtom, eatenStatesAtom, gridSizeAtom, foodAtom } from '../../../atoms';
 import './Grid.css';
 
 function Grid() {
   const snake = useAtomValue(snakeAtom);
+  const eatenStates = useAtomValue(eatenStatesAtom);
   const gridSize = useAtomValue(gridSizeAtom);
   const food = useAtomValue(foodAtom);
 
@@ -15,10 +16,15 @@ function Grid() {
         // Check if this cell contains the snake head
         const isSnakeHead = snake[0].x === col && snake[0].y === row;
 
-        // Check if this cell contains snake body
-        const isSnakeBody = snake.slice(1).some(
+        // Find body segment index at this position (if any)
+        // Body segments are at indices 1+ in snake array
+        const bodyIndex = snake.slice(1).findIndex(
           (segment) => segment.x === col && segment.y === row
         );
+        const isSnakeBody = bodyIndex !== -1;
+
+        // Get the state for this body segment (eatenStates[bodyIndex])
+        const bodyState = isSnakeBody ? eatenStates[bodyIndex] : null;
 
         // Check if this cell contains food
         const isFood = food.x === col && food.y === row;
@@ -35,6 +41,9 @@ function Grid() {
           >
             {isFood && (
               <img src={food.state.flag} alt="state flag" className="food-flag" />
+            )}
+            {isSnakeBody && bodyState && (
+              <img src={bodyState.flag} alt="state flag" className="body-flag" />
             )}
           </div>
         );
