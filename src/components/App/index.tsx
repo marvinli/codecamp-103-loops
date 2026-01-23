@@ -2,6 +2,7 @@ import Grid from './Grid'
 import StatePanel from './StatePanel'
 import { useGameLoop } from '../../hooks/useGameLoop'
 import { useKeyboardControls } from '../../hooks/useKeyboardControls'
+import { useSwipeControls } from '../../hooks/useSwipeControls'
 import './App.css'
 
 function App() {
@@ -11,10 +12,13 @@ function App() {
   // Initialize keyboard controls
   useKeyboardControls();
 
+  // Initialize swipe controls for mobile
+  useSwipeControls();
+
   return (
     <div className="game-container">
-      <Grid />
       <StatePanel />
+      <Grid />
     </div>
   );
 }

@@ -155,3 +155,20 @@
 .restart-button:hover {
   background-color: #5a9c5e;
 }
+
+@media (max-width: 768px) {
+  .grid-wrapper {
+    width: 90vw;
+    height: 90vw;
+  }
+
+  .paused-content h2,
+  .gameover-content h2 {
+    font-size: 1.8rem;
+  }
+
+  .paused-content p,
+  .gameover-content p {
+    font-size: 1rem;
+  }
+}

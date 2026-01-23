@@ -9,6 +9,11 @@ body {
   height: 100vh;
   overflow: hidden;
   background-color: #1a1a1a;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  overscroll-behavior: none;
 }
 
 #root {

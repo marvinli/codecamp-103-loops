@@ -89,3 +89,62 @@
   font-size: 0.9rem;
   line-height: 1.4;
 }
+
+@media (max-width: 768px) {
+  .state-panel {
+    width: 100%;
+    max-width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .state-panel-empty {
+    width: 100%;
+    height: auto;
+    padding: 16px;
+  }
+
+  .state-header {
+    flex: 0 0 auto;
+    gap: 8px;
+  }
+
+  .state-shape {
+    width: 40px;
+    height: 40px;
+  }
+
+  .state-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .state-flag-large {
+    width: 80px;
+    flex-shrink: 0;
+  }
+
+  .state-info {
+    flex: 1;
+    min-width: 150px;
+    gap: 4px;
+  }
+
+  .info-row {
+    font-size: 0.85rem;
+  }
+
+  .fun-fact {
+    flex: 1 1 100%;
+    padding: 8px;
+  }
+
+  .fun-fact-label {
+    margin-bottom: 4px;
+  }
+
+  .fun-fact p {
+    font-size: 0.85rem;
+  }
+}
