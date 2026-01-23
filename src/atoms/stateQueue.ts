@@ -1,5 +1,5 @@
-import { atom } from 'jotai';
-import { states, shuffleArray, type StateInfo } from '../data/states';
+import { atom } from "jotai";
+import { type StateInfo, shuffleArray, states } from "../data/states";
 
 // Initialize with shuffled states
 export const stateQueueAtom = atom<StateInfo[]>(shuffleArray([...states]));

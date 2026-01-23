@@ -1,22 +1,22 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background-color: #1a1a1a;
-  touch-action: none;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  user-select: none;
-  overscroll-behavior: none;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	background-color: #1a1a1a;
+	touch-action: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	user-select: none;
+	overscroll-behavior: none;
 }
 
 #root {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }

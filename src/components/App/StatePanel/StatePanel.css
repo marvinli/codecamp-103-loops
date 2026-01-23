@@ -1,150 +1,152 @@
 .state-panel {
-  width: 300px;
-  background-color: #1a1a1a;
-  border: 2px solid #555;
-  border-radius: 8px;
-  padding: 20px;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	width: 300px;
+	background-color: #1a1a1a;
+	border: 2px solid #555;
+	border-radius: 8px;
+	padding: 20px;
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	font-family:
+		-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+		sans-serif;
 }
 
 .state-panel-empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 200px;
-  color: #888;
-  text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 200px;
+	color: #888;
+	text-align: center;
 }
 
 .state-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+	display: flex;
+	align-items: center;
+	gap: 16px;
 }
 
 .state-shape {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  filter: invert(1);
+	width: 60px;
+	height: 60px;
+	object-fit: contain;
+	filter: invert(1);
 }
 
 .state-header h2 {
-  margin: 0;
-  font-size: 1.5rem;
+	margin: 0;
+	font-size: 1.5rem;
 }
 
 .state-flag-large {
-  width: 100%;
-  aspect-ratio: 3/2;
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid #333;
+	width: 100%;
+	aspect-ratio: 3 / 2;
+	border-radius: 4px;
+	overflow: hidden;
+	border: 1px solid #333;
 }
 
 .state-flag-large img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .state-info {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 }
 
 .info-row {
-  display: flex;
-  justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }
 
 .info-label {
-  color: #888;
+	color: #888;
 }
 
 .info-value {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 .fun-fact {
-  background-color: #2a2a2a;
-  padding: 12px;
-  border-radius: 4px;
+	background-color: #2a2a2a;
+	padding: 12px;
+	border-radius: 4px;
 }
 
 .fun-fact-label {
-  color: #4ade80;
-  font-weight: bold;
-  display: block;
-  margin-bottom: 8px;
+	color: #4ade80;
+	font-weight: bold;
+	display: block;
+	margin-bottom: 8px;
 }
 
 .fun-fact p {
-  margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.4;
+	margin: 0;
+	font-size: 0.9rem;
+	line-height: 1.4;
 }
 
 @media (max-width: 768px) {
-  .state-panel {
-    width: 100%;
-    max-width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 12px;
-    gap: 12px;
-  }
+	.state-panel {
+		width: 100%;
+		max-width: 100%;
+		flex-direction: row;
+		flex-wrap: wrap;
+		padding: 12px;
+		gap: 12px;
+	}
 
-  .state-panel-empty {
-    width: 100%;
-    height: auto;
-    padding: 16px;
-  }
+	.state-panel-empty {
+		width: 100%;
+		height: auto;
+		padding: 16px;
+	}
 
-  .state-header {
-    flex: 0 0 auto;
-    gap: 8px;
-  }
+	.state-header {
+		flex: 0 0 auto;
+		gap: 8px;
+	}
 
-  .state-shape {
-    width: 40px;
-    height: 40px;
-  }
+	.state-shape {
+		width: 40px;
+		height: 40px;
+	}
 
-  .state-header h2 {
-    font-size: 1.2rem;
-  }
+	.state-header h2 {
+		font-size: 1.2rem;
+	}
 
-  .state-flag-large {
-    width: 80px;
-    flex-shrink: 0;
-  }
+	.state-flag-large {
+		width: 80px;
+		flex-shrink: 0;
+	}
 
-  .state-info {
-    flex: 1;
-    min-width: 150px;
-    gap: 4px;
-  }
+	.state-info {
+		flex: 1;
+		min-width: 150px;
+		gap: 4px;
+	}
 
-  .info-row {
-    font-size: 0.85rem;
-  }
+	.info-row {
+		font-size: 0.85rem;
+	}
 
-  .fun-fact {
-    flex: 1 1 100%;
-    padding: 8px;
-  }
+	.fun-fact {
+		flex: 1 1 100%;
+		padding: 8px;
+	}
 
-  .fun-fact-label {
-    margin-bottom: 4px;
-  }
+	.fun-fact-label {
+		margin-bottom: 4px;
+	}
 
-  .fun-fact p {
-    font-size: 0.85rem;
-  }
+	.fun-fact p {
+		font-size: 0.85rem;
+	}
 }
