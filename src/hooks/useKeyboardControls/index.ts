@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { useAtom } from 'jotai';
-import { directionAtom, type Direction } from '../../atoms';
+import { directionAtom, gameStatusAtom, type Direction } from '../../atoms';
 
 export const useKeyboardControls = () => {
   const [direction, setDirection] = useAtom(directionAtom);
+  const [gameStatus, setGameStatus] = useAtom(gameStatusAtom);
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -36,10 +37,13 @@ export const useKeyboardControls = () => {
       if (newDirection) {
         event.preventDefault(); // Prevent scrolling
         setDirection(newDirection);
+        if (gameStatus === 'PAUSED') {
+          setGameStatus('PLAYING');
+        }
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [direction, setDirection]);
+  }, [direction, setDirection, gameStatus, setGameStatus]);
 };

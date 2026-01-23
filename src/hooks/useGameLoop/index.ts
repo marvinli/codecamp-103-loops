@@ -1,31 +1,33 @@
 import { useEffect } from 'react';
 import { useStore } from 'jotai';
 import { gameStatusAtom } from '../../atoms';
-import { useCalculateNewHead } from './calculateNewHead';
+import { useGetNewHeadPosition } from './getNewHeadPosition';
 import { useCheckWallCollision } from './checkWallCollision';
 import { useCheckSelfCollision } from './checkSelfCollision';
-import { useHandleFood } from './handleFood';
+import { useEatIfFood } from './eatIfFood';
+import { useSpawnNewFood } from './spawnNewFood';
 
 const GAME_SPEED = 150;
 
 export const useGameLoop = () => {
   const store = useStore();
 
-  const calculateNewHead = useCalculateNewHead();
+  const getNewHeadPosition = useGetNewHeadPosition();
   const checkWallCollision = useCheckWallCollision();
   const checkSelfCollision = useCheckSelfCollision();
-  const handleFood = useHandleFood();
+  const eatIfFood = useEatIfFood();
+  const spawnNewFood = useSpawnNewFood();
 
   useEffect(() => {
     const gameLoop = setInterval(() => {
       if (store.get(gameStatusAtom) !== 'PLAYING') return;
 
-      calculateNewHead();
+      getNewHeadPosition();
       if (checkWallCollision()) return;
       if (checkSelfCollision()) return;
-      handleFood();
+      if (eatIfFood()) spawnNewFood();
     }, GAME_SPEED);
 
     return () => clearInterval(gameLoop);
-  }, [store, calculateNewHead, checkWallCollision, checkSelfCollision, handleFood]);
+  }, [store, getNewHeadPosition, checkWallCollision, checkSelfCollision, eatIfFood, spawnNewFood]);
 };

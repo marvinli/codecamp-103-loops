@@ -1,6 +1,7 @@
 import { useAtomValue } from 'jotai';
 import { snakeAtom, eatenStatesAtom, gridSizeAtom, foodAtom, directionAtom, isChompingAtom, gameStatusAtom } from '../../../atoms';
 import { head, headChomp, headKo } from '../../../assets/snake';
+import { useResetGame } from '../../../hooks/useResetGame';
 import './Grid.css';
 
 // CSS transforms for each direction (base image faces RIGHT)
@@ -19,8 +20,11 @@ function Grid() {
   const direction = useAtomValue(directionAtom);
   const isChomping = useAtomValue(isChompingAtom);
   const gameStatus = useAtomValue(gameStatusAtom);
+  const resetGame = useResetGame();
 
   const isGameOver = gameStatus === 'GAME_OVER';
+  const isPaused = gameStatus === 'PAUSED';
+  const score = eatenStates.length;
   const headImage = isGameOver ? headKo : isChomping ? headChomp : head;
   const headTransform = headTransforms[direction];
 
@@ -81,14 +85,36 @@ function Grid() {
   };
 
   return (
-    <div
-      className="grid"
-      style={{
-        gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
-        gridTemplateRows: `repeat(${gridSize}, 1fr)`
-      }}
-    >
-      {renderGrid()}
+    <div className="grid-wrapper">
+      <div
+        className="grid"
+        style={{
+          gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
+          gridTemplateRows: `repeat(${gridSize}, 1fr)`
+        }}
+      >
+        {renderGrid()}
+      </div>
+      {isPaused && (
+        <div className="paused-overlay">
+          <div className="paused-content">
+            <h2>State Snake</h2>
+            <p>Eat flags to learn US states!</p>
+            <p className="paused-cta">Press any arrow key to start</p>
+          </div>
+        </div>
+      )}
+      {isGameOver && (
+        <div className="gameover-overlay">
+          <div className="gameover-content">
+            <h2>Game Over</h2>
+            <p>You learned {score} state{score !== 1 ? 's' : ''}!</p>
+            <button className="restart-button" onClick={resetGame}>
+              Play Again
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useStore } from 'jotai';
 import { snakeAtom, directionAtom, newHeadAtom } from '../../atoms';
 
-export const useCalculateNewHead = () => {
+export const useGetNewHeadPosition = () => {
   const store = useStore();
 
   return useCallback(() => {

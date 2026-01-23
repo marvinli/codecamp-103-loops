@@ -7,14 +7,10 @@ import {
   foodAtom,
   newHeadAtom,
   scoreAtom,
-  GRID_SIZE,
-  stateQueueAtom,
   currentStateAtom,
 } from '../../atoms';
-import { type Food } from '../../atoms/food';
-import { states, shuffleArray } from '../../data/states';
 
-export const useHandleFood = () => {
+export const useEatIfFood = () => {
   const store = useStore();
 
   return useCallback(() => {
@@ -36,30 +32,8 @@ export const useHandleFood = () => {
       store.set(eatenStatesAtom, [food.state, ...eatenStates]);
 
       // Grow snake (keep all segments, add new head)
-      const newSnake = [{ x: newHead.x, y: newHead.y }, ...snake];
-      store.set(snakeAtom, newSnake);
+      store.set(snakeAtom, [{ x: newHead.x, y: newHead.y }, ...snake]);
       store.set(scoreAtom, store.get(scoreAtom) + 10);
-
-      // Get next state from queue
-      let queue = store.get(stateQueueAtom);
-      if (queue.length === 0) {
-        queue = shuffleArray([...states]);
-      }
-      const [nextState, ...remainingQueue] = queue;
-      store.set(stateQueueAtom, remainingQueue);
-
-      // Generate new food position with next state
-      let newFood: Food;
-      do {
-        newFood = {
-          x: Math.floor(Math.random() * GRID_SIZE),
-          y: Math.floor(Math.random() * GRID_SIZE),
-          state: nextState,
-        };
-      } while (
-        newSnake.some((segment) => segment.x === newFood.x && segment.y === newFood.y)
-      );
-      store.set(foodAtom, newFood);
     } else {
       // Reset chomping state
       store.set(isChompingAtom, false);
@@ -67,5 +41,7 @@ export const useHandleFood = () => {
       // Move snake (remove tail)
       store.set(snakeAtom, [{ x: newHead.x, y: newHead.y }, ...snake.slice(0, -1)]);
     }
+
+    return ateFood;
   }, [store]);
 };
