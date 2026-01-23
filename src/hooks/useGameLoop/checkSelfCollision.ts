@@ -1,22 +1,19 @@
-import { useStore } from "jotai";
-import { useCallback } from "react";
+import type { getDefaultStore } from "jotai";
 import { gameStatusAtom, newHeadAtom, snakeAtom } from "../../atoms";
 
-export const useCheckSelfCollision = () => {
-	const store = useStore();
+type Store = ReturnType<typeof getDefaultStore>;
 
-	return useCallback(() => {
-		const snake = store.get(snakeAtom);
-		const newHead = store.get(newHeadAtom);
+export const checkSelfCollision = (store: Store) => {
+	const snake = store.get(snakeAtom);
+	const newHead = store.get(newHeadAtom);
 
-		const hitSelf = snake.some(
-			(segment) => segment.x === newHead.x && segment.y === newHead.y,
-		);
+	const hitSelf = snake.some(
+		(segment) => segment.x === newHead.x && segment.y === newHead.y,
+	);
 
-		if (hitSelf) {
-			store.set(gameStatusAtom, "GAME_OVER");
-			return true;
-		}
-		return false;
-	}, [store]);
+	if (hitSelf) {
+		store.set(gameStatusAtom, "GAME_OVER");
+		return true;
+	}
+	return false;
 };
