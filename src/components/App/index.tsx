@@ -1,7 +1,7 @@
 import { useGameLoop } from "../../hooks/useGameLoop";
 import { useKeyboardControls } from "../../hooks/useKeyboardControls";
 import { useSwipeControls } from "../../hooks/useSwipeControls";
-import Grid from "./Grid";
+import GameGrid from "./Grid";
 import StatePanel from "./StatePanel";
 import "./App.css";
 
@@ -18,7 +18,7 @@ function App() {
 	return (
 		<div className="game-container">
 			<StatePanel />
-			<Grid />
+			<GameGrid />
 		</div>
 	);
 }

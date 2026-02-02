@@ -20,7 +20,7 @@ const headTransforms = {
 	DOWN: "rotate(90deg)",
 };
 
-function Grid() {
+function GameGrid() {
 	const snake = useAtomValue(snakeAtom);
 	const eatenStates = useAtomValue(eatenStatesAtom);
 	const gridSize = useAtomValue(gridSizeAtom);
@@ -136,4 +136,4 @@ function Grid() {
 	);
 }
 
-export default Grid;
+export default GameGrid;
