@@ -26,6 +26,13 @@ export const eatIfFood = (store: Store) => {
 		// Set the current state to display in side panel
 		store.set(currentStateAtom, food.state);
 
+		// Speak the state name and fun fact
+		speechSynthesis.cancel();
+		const utterance = new SpeechSynthesisUtterance(
+			`${food.state.name}. ${food.state.funFact}`,
+		);
+		speechSynthesis.speak(utterance);
+
 		// Add eaten state to front of list
 		store.set(eatenStatesAtom, [food.state, ...eatenStates]);
 

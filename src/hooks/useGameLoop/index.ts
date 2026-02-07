@@ -2,7 +2,7 @@ import { useStore } from "jotai";
 import { useEffect } from "react";
 import { gameLoop } from "./gameLoop";
 
-const GAME_SPEED = 150;
+const GAME_SPEED = 500;
 
 export const useGameLoop = () => {
 	const store = useStore();
