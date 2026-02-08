@@ -1,4 +1,5 @@
 import { useAtomValue } from "jotai";
+import icon from "../../../assets/icon.png";
 import { head, headChomp, headKo } from "../../../assets/snake";
 import {
 	directionAtom,
@@ -109,8 +110,7 @@ function GameGrid() {
 			{isPaused && (
 				<div className="paused-overlay">
 					<div className="paused-content">
-						<h2>State Snake</h2>
-						<p>Eat flags to learn US states!</p>
+						<img src={icon} alt="State Snake" className="paused-icon" />
 						<p className="paused-cta">Press any arrow key to start</p>
 					</div>
 				</div>
