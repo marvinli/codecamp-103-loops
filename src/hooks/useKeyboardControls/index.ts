@@ -1,6 +1,11 @@
 import { useStore } from "jotai";
 import { useEffect } from "react";
-import { type Direction, directionAtom, gameStatusAtom } from "../../atoms";
+import {
+	type Direction,
+	directionAtom,
+	gameStatusAtom,
+	hasStartedAtom,
+} from "../../atoms";
 import { useResetGame } from "../useResetGame";
 
 export const useKeyboardControls = () => {
@@ -13,6 +18,7 @@ export const useKeyboardControls = () => {
 
 			if (status === "PAUSED") {
 				event.preventDefault();
+				store.set(hasStartedAtom, true);
 				store.set(gameStatusAtom, "PLAYING");
 				return;
 			}
@@ -20,6 +26,12 @@ export const useKeyboardControls = () => {
 			if (status === "GAME_OVER") {
 				event.preventDefault();
 				resetGame();
+				return;
+			}
+
+			if (event.key === " ") {
+				event.preventDefault();
+				store.set(gameStatusAtom, "PAUSED");
 				return;
 			}
 

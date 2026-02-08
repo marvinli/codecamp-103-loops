@@ -7,6 +7,7 @@ import {
 	foodAtom,
 	GRID_SIZE,
 	gameStatusAtom,
+	hasStartedAtom,
 	isChompingAtom,
 	snakeAtom,
 	stateQueueAtom,
@@ -34,5 +35,6 @@ export const useResetGame = () => {
 			state: shuffledStates[0],
 		});
 		store.set(currentStateAtom, null);
+		store.set(hasStartedAtom, false);
 	}, [store]);
 };

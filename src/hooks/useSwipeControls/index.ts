@@ -1,6 +1,11 @@
 import { useStore } from "jotai";
 import { useEffect, useRef } from "react";
-import { type Direction, directionAtom, gameStatusAtom } from "../../atoms";
+import {
+	type Direction,
+	directionAtom,
+	gameStatusAtom,
+	hasStartedAtom,
+} from "../../atoms";
 import { useResetGame } from "../useResetGame";
 
 const SWIPE_THRESHOLD = 30;
@@ -22,6 +27,7 @@ export const useSwipeControls = () => {
 			const status = store.get(gameStatusAtom);
 
 			if (status === "PAUSED") {
+				store.set(hasStartedAtom, true);
 				store.set(gameStatusAtom, "PLAYING");
 				touchStartRef.current = null;
 				return;

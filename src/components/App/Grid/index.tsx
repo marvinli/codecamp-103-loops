@@ -7,6 +7,7 @@ import {
 	foodAtom,
 	gameStatusAtom,
 	gridSizeAtom,
+	hasStartedAtom,
 	isChompingAtom,
 	snakeAtom,
 } from "../../../atoms";
@@ -29,7 +30,7 @@ function GameGrid() {
 	const direction = useAtomValue(directionAtom);
 	const isChomping = useAtomValue(isChompingAtom);
 	const gameStatus = useAtomValue(gameStatusAtom);
-	const resetGame = useResetGame();
+	const hasStarted = useAtomValue(hasStartedAtom);
 
 	const isGameOver = gameStatus === "GAME_OVER";
 	const isPaused = gameStatus === "PAUSED";
@@ -110,8 +111,17 @@ function GameGrid() {
 			{isPaused && (
 				<div className="paused-overlay">
 					<div className="paused-content">
-						<img src={icon} alt="State Snake" className="paused-icon" />
-						<p className="paused-cta">Press any key or swipe to start</p>
+						{hasStarted ? (
+							<>
+								<h2>Paused</h2>
+								<p className="paused-cta">Press any key or swipe to resume</p>
+							</>
+						) : (
+							<>
+								<img src={icon} alt="State Snake" className="paused-icon" />
+								<p className="paused-cta">Press any key or swipe to start</p>
+							</>
+						)}
 					</div>
 				</div>
 			)}

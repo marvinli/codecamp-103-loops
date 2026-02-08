@@ -2,7 +2,7 @@ export type { Direction } from "./direction";
 export { directionAtom } from "./direction";
 export { foodAtom } from "./food";
 export type { GameStatus } from "./gameStatus";
-export { gameStatusAtom } from "./gameStatus";
+export { gameStatusAtom, hasStartedAtom } from "./gameStatus";
 export { GRID_SIZE, gridSizeAtom } from "./grid";
 export { newHeadAtom } from "./newHead";
 export { scoreAtom } from "./score";
