@@ -159,8 +159,8 @@
 @media (max-width: 768px) {
 	.grid-wrapper {
 		flex: 0 1 auto;
-		width: min(90vw, calc(100vh - 200px - 48px));
-		height: min(90vw, calc(100vh - 200px - 48px));
+		width: min(90vw, calc(100dvh - 160px - 48px));
+		height: min(90vw, calc(100dvh - 160px - 48px));
 	}
 
 	.paused-content h2,
