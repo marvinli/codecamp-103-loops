@@ -1,22 +1,31 @@
 import { useAtomValue } from "jotai";
-import { currentStateAtom } from "../../../atoms";
+import { currentStateAtom, eatenStatesAtom } from "../../../atoms";
 import "./StatePanel.css";
 
 function StatePanel() {
 	const currentState = useAtomValue(currentStateAtom);
+	const eatenStates = useAtomValue(eatenStatesAtom);
+
+	const count = eatenStates.length;
+	const countLabel = count === 1 ? "1 state" : `${count} states`;
 
 	if (!currentState) {
 		return (
-			<div className="state-panel">
-				<div className="state-panel-empty">
-					<p>Eat a flag to learn about a state!</p>
+			<div className="state-panel-wrapper">
+				<div className="states-eaten-count">{countLabel}</div>
+				<div className="state-panel">
+					<div className="state-panel-empty">
+						<p>Eat a flag to learn about a state!</p>
+					</div>
 				</div>
 			</div>
 		);
 	}
 
 	return (
-		<div className="state-panel">
+		<div className="state-panel-wrapper">
+			<div className="states-eaten-count">{countLabel}</div>
+			<div className="state-panel">
 			<div className="state-header">
 				<img
 					src={currentState.shape}
@@ -53,6 +62,7 @@ function StatePanel() {
 				<span className="fun-fact-label">Fun Fact:</span>
 				<p>{currentState.funFact}</p>
 			</div>
+		</div>
 		</div>
 	);
 }

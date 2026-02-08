@@ -22,6 +22,22 @@
 	text-align: center;
 }
 
+.state-panel-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.states-eaten-count {
+	text-align: center;
+	font-size: 1.4rem;
+	font-weight: bold;
+	color: #fff;
+	font-family:
+		-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+		sans-serif;
+}
+
 .state-header {
 	display: flex;
 	align-items: center;
@@ -93,13 +109,28 @@
 }
 
 @media (max-width: 768px) {
+	.state-panel-wrapper {
+		flex: 1 1 0;
+		min-height: 120px;
+		gap: 8px;
+		overflow: hidden;
+	}
+
+	.states-eaten-count {
+		flex: 0 0 auto;
+		font-size: 1.1rem;
+	}
+
 	.state-panel {
 		width: 100%;
 		max-width: 100%;
-		flex-direction: row;
-		flex-wrap: wrap;
+		flex: 1 1 0;
+		display: grid;
+		grid-template-columns: auto 80px 1fr;
+		grid-template-rows: auto 1fr;
 		padding: 12px;
 		gap: 12px;
+		overflow: hidden;
 	}
 
 	.state-panel-empty {
@@ -109,7 +140,8 @@
 	}
 
 	.state-header {
-		flex: 0 0 auto;
+		grid-column: 1;
+		grid-row: 1;
 		gap: 8px;
 	}
 
@@ -123,13 +155,16 @@
 	}
 
 	.state-flag-large {
+		grid-column: 2;
+		grid-row: 1;
 		width: 80px;
-		flex-shrink: 0;
+		height: 54px;
+		aspect-ratio: unset;
 	}
 
 	.state-info {
-		flex: 1;
-		min-width: 150px;
+		grid-column: 3;
+		grid-row: 1;
 		gap: 4px;
 	}
 
@@ -138,8 +173,10 @@
 	}
 
 	.fun-fact {
-		flex: 1 1 100%;
+		grid-column: 1 / -1;
+		grid-row: 2;
 		padding: 8px;
+		align-self: stretch;
 	}
 
 	.fun-fact-label {
