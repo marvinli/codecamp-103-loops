@@ -1,12 +1,28 @@
 import { useStore } from "jotai";
 import { useEffect } from "react";
 import { type Direction, directionAtom, gameStatusAtom } from "../../atoms";
+import { useResetGame } from "../useResetGame";
 
 export const useKeyboardControls = () => {
 	const store = useStore();
+	const resetGame = useResetGame();
 
 	useEffect(() => {
 		const handleKeyPress = (event: KeyboardEvent) => {
+			const status = store.get(gameStatusAtom);
+
+			if (status === "PAUSED") {
+				event.preventDefault();
+				store.set(gameStatusAtom, "PLAYING");
+				return;
+			}
+
+			if (status === "GAME_OVER") {
+				event.preventDefault();
+				resetGame();
+				return;
+			}
+
 			const direction = store.get(directionAtom);
 			let newDirection: Direction | null = null;
 
@@ -36,13 +52,10 @@ export const useKeyboardControls = () => {
 			if (newDirection) {
 				event.preventDefault();
 				store.set(directionAtom, newDirection);
-				if (store.get(gameStatusAtom) === "PAUSED") {
-					store.set(gameStatusAtom, "PLAYING");
-				}
 			}
 		};
 
 		window.addEventListener("keydown", handleKeyPress);
 		return () => window.removeEventListener("keydown", handleKeyPress);
-	}, [store]);
+	}, [store, resetGame]);
 };

@@ -146,20 +146,14 @@
 	color: #ccc;
 }
 
-.restart-button {
+.restart-cta {
 	margin-top: 1.5rem;
-	padding: 0.75rem 2rem;
-	font-size: 1.1rem;
+	padding: 0.75rem 1.5rem;
 	background-color: #4a7c4e;
-	color: white;
-	border: none;
 	border-radius: 8px;
-	cursor: pointer;
-	transition: background-color 0.2s;
-}
-
-.restart-button:hover {
-	background-color: #5a9c5e;
+	display: inline-block;
+	color: white;
+	animation: pulse 2s ease-in-out infinite;
 }
 
 @media (max-width: 768px) {
