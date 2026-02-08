@@ -111,7 +111,7 @@ function GameGrid() {
 				<div className="paused-overlay">
 					<div className="paused-content">
 						<img src={icon} alt="State Snake" className="paused-icon" />
-						<p className="paused-cta">Press any key to start</p>
+						<p className="paused-cta">Press any key or swipe to start</p>
 					</div>
 				</div>
 			)}
@@ -122,7 +122,7 @@ function GameGrid() {
 						<p>
 							You chomped {score} state{score !== 1 ? "s" : ""}!
 						</p>
-						<p className="restart-cta">Press any key to play again</p>
+						<p className="restart-cta">Press any key or swipe to play again</p>
 					</div>
 				</div>
 			)}

@@ -1,11 +1,13 @@
 import { useStore } from "jotai";
 import { useEffect, useRef } from "react";
 import { type Direction, directionAtom, gameStatusAtom } from "../../atoms";
+import { useResetGame } from "../useResetGame";
 
 const SWIPE_THRESHOLD = 30;
 
 export const useSwipeControls = () => {
 	const store = useStore();
+	const resetGame = useResetGame();
 	const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
 	useEffect(() => {
@@ -16,6 +18,20 @@ export const useSwipeControls = () => {
 
 		const handleTouchEnd = (event: TouchEvent) => {
 			if (!touchStartRef.current) return;
+
+			const status = store.get(gameStatusAtom);
+
+			if (status === "PAUSED") {
+				store.set(gameStatusAtom, "PLAYING");
+				touchStartRef.current = null;
+				return;
+			}
+
+			if (status === "GAME_OVER") {
+				resetGame();
+				touchStartRef.current = null;
+				return;
+			}
 
 			const touch = event.changedTouches[0];
 			const deltaX = touch.clientX - touchStartRef.current.x;
@@ -48,9 +64,6 @@ export const useSwipeControls = () => {
 
 			if (newDirection) {
 				store.set(directionAtom, newDirection);
-				if (store.get(gameStatusAtom) === "PAUSED") {
-					store.set(gameStatusAtom, "PLAYING");
-				}
 			}
 
 			touchStartRef.current = null;
@@ -63,5 +76,5 @@ export const useSwipeControls = () => {
 			window.removeEventListener("touchstart", handleTouchStart);
 			window.removeEventListener("touchend", handleTouchEnd);
 		};
-	}, [store]);
+	}, [store, resetGame]);
 };
